@@ -1,0 +1,195 @@
+/* CSS Variables for easier theming */
+:root {
+    --primary-font: 'Roboto', sans-serif;
+    --background-color: #f8f9fa; /* Lighter, cleaner background */
+    --card-background: #ffffff;
+    --text-color: #343a40; /* Darker grey, less harsh than black */
+    --heading-color: #212529; /* Even darker for headings */
+    --primary-accent: #007bff; /* A professional blue, can be changed */
+    --primary-accent-hover: #0056b3;
+    --border-color: #e9ecef; /* Lighter border color */
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --shadow-color-hover: rgba(0, 0, 0, 0.12);
+}
+
+body {
+    font-family: var(--primary-font);
+    line-height: 1.7; /* Slightly more generous line height */
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased; /* Smoother fonts on WebKit */
+    -moz-osx-font-smoothing: grayscale; /* Smoother fonts on Firefox */
+}
+
+header {
+    background: var(--card-background); /* Lighter header */
+    color: var(--heading-color);
+    padding: 2.5rem 1rem; /* More vertical padding */
+    text-align: center;
+    margin-bottom: 40px; /* Increased margin */
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.8rem; /* Slightly larger */
+    font-weight: 700; /* Bolder */
+}
+
+header p {
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #5a6268; /* Softer color for subtitle */
+    font-weight: 300;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly wider min card width */
+    gap: 30px; /* Adjusted gap */
+    padding: 20px 40px; /* More horizontal padding for the grid container */
+    max-width: 1300px; /* Slightly wider max width */
+    margin: 0 auto;
+}
+
+.team-member-card {
+    background: var(--card-background);
+    border-radius: 12px; /* Softer corners */
+    box-shadow: 0 4px 8px var(--shadow-color), 0 1px 3px var(--shadow-color); /* Softer, layered shadow */
+    padding: 30px; /* More internal padding */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-member-card:hover {
+    transform: translateY(-8px); /* Subtle lift on hover */
+    box-shadow: 0 8px 16px var(--shadow-color-hover), 0 4px 6px var(--shadow-color-hover); /* Enhanced shadow on hover */
+}
+
+.profile-pic {
+    width: 160px; /* Slightly larger */
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px; /* Increased margin */
+    border: 4px solid var(--card-background); /* Border same as card background to create inset illusion */
+    box-shadow: 0 0 0 3px var(--primary-accent), 0 2px 5px rgba(0,0,0,0.1); /* Accent border + subtle shadow */
+}
+
+.team-member-card h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--heading-color);
+    font-size: 1.75rem; /* Larger name */
+    font-weight: 700;
+}
+
+.team-member-card .role {
+    font-style: normal; /* Removed italic for a cleaner look, personal preference */
+    color: var(--primary-accent); /* Use accent color for role */
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.5px; /* Slight letter spacing */
+}
+
+.team-member-card .bio {
+    font-size: 0.98rem; /* Slightly larger bio text */
+    text-align: justify;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    flex-grow: 1; /* Allows bio to take up available space if cards have different content lengths */
+}
+
+
+
+.social-links {
+    margin-top: auto; /* Pushes social links to the bottom if cards have varying bio lengths */
+    padding-top: 15px; /* Space above social links */
+}
+
+.social-links a {
+    color: #6c757d; /* Subdued default icon color */
+    text-decoration: none;
+    margin: 0 12px; /* Increased margin */
+    font-size: 1.6rem; /* Larger icons */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-accent); /* Accent color on hover */
+    transform: scale(1.1); /* Slight scale on hover */
+}
+
+/* Specific icon hover colors (optional - can be more specific) */
+.social-links a:hover .fa-linkedin { color: #0077B5; }
+.social-links a:hover .fa-github { color: #333; }
+.social-links a:hover .fa-globe { color: #0056b3; }
+.social-links a:hover .fa-university { color: #8c52ff; } /* Example for different icon */
+
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem; /* More padding */
+    background: #343a40; /* Darker footer for contrast */
+    color: #adb5bd; /* Lighter text on dark background */
+    margin-top: 50px; /* Increased margin */
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #f8f9fa; /* Lighter link color for dark footer */
+    text-decoration: none;
+    font-weight: 500;
+}
+footer a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .team-grid {
+        padding: 20px; /* Adjust padding for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+    header p {
+        font-size: 1rem;
+    }
+    .team-grid {
+        grid-template-columns: 1fr; /* Stack cards */
+        gap: 25px;
+        padding: 20px 15px;
+    }
+    .team-member-card {
+        padding: 25px;
+    }
+    .profile-pic {
+        width: 300px;
+        height: 300px;
+    }
+    
+
+    .team-member-card h2 {
+        font-size: 1.5rem;
+    }
+}
