@@ -1,0 +1,367 @@
+
+/* CSS Variables */
+:root {
+    --primary-font: 'Inter', sans-serif;
+    --mono-font: 'JetBrains Mono', monospace;
+    --bg-primary: #0a0b0f;
+    --bg-secondary: #1a1d24;
+    --card-bg: rgba(26, 29, 36, 0.8);
+    --card-border: rgba(71, 85, 105, 0.3);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-accent: #cbd5e1;
+    --accent-blue: #3b82f6;
+    --accent-cyan: #06b6d4;
+    --accent-orange: #f59e0b;
+    --accent-green: #10b981;
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.15);
+    --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--primary-font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Animated Background Elements */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Electricity Animation */
+.electricity-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: electricGrid 4s ease-in-out infinite;
+}
+
+.electric-pulse {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--accent-blue);
+    animation: electricPulse 3s linear infinite;
+}
+
+/* Water Flow Animation */
+.water-drops {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: waterFlow 6s linear infinite;
+}
+
+.water-wave {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+    animation: waveFlow 8s ease-in-out infinite;
+}
+
+/* Heat Animation */
+.heat-shimmer {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: heatRise 4s ease-in-out infinite;
+}
+
+@keyframes electricGrid {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes electricPulse {
+    0% { transform: translate(0, 100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translate(100vw, 0) scale(1); opacity: 0; }
+}
+
+@keyframes waterFlow {
+    0% { transform: translate(-10px, -10px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translate(100vw, 100vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes waveFlow {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes heatRise {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+}
+
+/* Language Toggle */
+.language-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    padding: 8px;
+    display: flex;
+    gap: 4px;
+}
+
+.lang-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 25px;
+    font-family: var(--mono-font);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+    background: var(--accent-blue);
+    color: var(--text-primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Header */
+header {
+    position: relative;
+    padding: 120px 20px 80px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+    border-bottom: 1px solid var(--card-border);
+}
+
+.header-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+header h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    0% { filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); }
+    100% { filter: drop-shadow(0 0 40px rgba(16, 185, 129, 0.5)); }
+}
+
+header p {
+    font-size: 1.25rem;
+    color: var(--text-accent);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+/* Team Grid */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    padding: 80px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.team-member-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-member-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-green));
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.team-member-card:hover::before {
+    transform: translateX(0);
+}
+
+.team-member-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-card);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.profile-pic {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 24px;
+    border: 3px solid transparent;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan)) padding-box,
+                linear-gradient(135deg, var(--accent-blue), var(--accent-cyan)) border-box;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.team-member-card:hover .profile-pic {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+}
+
+.team-member-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.team-member-card .role {
+    color: var(--accent-blue);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    font-family: var(--mono-font);
+    letter-spacing: 0.5px;
+}
+
+.team-member-card .bio {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: auto;
+}
+
+.social-links a {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background: var(--accent-blue);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--card-border);
+    margin-top: 80px;
+}
+
+footer p {
+    color: var(--text-secondary);
+    font-family: var(--mono-font);
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .language-toggle {
+        top: 15px;
+        right: 15px;
+    }
+    
+    header {
+        padding: 100px 15px 60px;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 60px 20px;
+    }
+    
+    .team-member-card {
+        padding: 30px;
+    }
+    
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* Hidden elements for language switching */
+[data-lang="de"] { display: none; }
+.lang-de [data-lang="en"] { display: none; }
+.lang-de [data-lang="de"] { display: block; }
