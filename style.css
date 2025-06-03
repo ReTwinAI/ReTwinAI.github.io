@@ -49,10 +49,11 @@ header p {
 
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly wider min card width */
-    gap: 30px; /* Adjusted gap */
-    padding: 20px 40px; /* More horizontal padding for the grid container */
-    max-width: 1600px; /* Slightly wider max width */
+    /* This line allows for automatic column wrapping based on card width */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 30px;
+    padding: 20px 40px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
