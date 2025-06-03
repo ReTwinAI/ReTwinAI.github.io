@@ -10,89 +10,20 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     </head>
 <body>
+    <div class="language-switcher">
+        <button onclick="switchLanguage('en')" class="active" id="lang-en">EN</button>
+        <button onclick="switchLanguage('de')" id="lang-de">DE</button>
+    </div>
     <header>
-        <h1>Meet Our Team</h1>
-        <p>We are passionate about revolutionizing utility management with AI.</p>
+        <h1 data-en="Meet Our Team" data-de="Lernen Sie unser Team kennen">Meet Our Team</h1>
+        <p data-en="We are passionate about revolutionizing utility management with AI." data-de="Wir sind leidenschaftlich dabei, das Versorgungsmanagement mit KI zu revolutionieren.">We are passionate about revolutionizing utility management with AI.</p>
     </header>
 
-    <main class="team-grid">
-    <!-- Team Member 1: Adithya -->
-    <div class="team-member-card">
-        <img src="images/adithya.jpeg" alt="Adithya Ramachandran" class="profile-pic">
-        <h2>Adithya Ramachandran</h2>
-        <p class="role">PhD Researcher</p>
-        <p class="bio">
-            Hello! I'm Adithya Ramachandran, a Computer Science Doctoral Candidate at FAU Erlangen specializing in AI-driven solutions for water and heat supply systems. With a background in Computational (M.Sc.) and Mechanical (B.Eng.) Engineering, I'm passionate about translating complex AI research into tangible, real-world applications that enhance sustainability and efficiency in the utility sector.
-        </p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/adithya-ramachandran94/" target="_blank" aria-label="Adithya Ramachandran's LinkedIn Profile">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://adithya-ramachandran.github.io/adithyar.github.io/" target="_blank" aria-label="Adithya Ramachandran's GitHub Profile">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://lme.tf.fau.de/person/adithya-ramachandran/" target="_blank" aria-label="Adithya Ramachandran's Webpage">
-                <i class="fas fa-globe"></i> <!-- or fa-graduation-cap or fa-university -->
-            </a>
+    <main class="team-grid" id="team-grid">
+        <!-- Team members will be loaded dynamically from team.json -->
+        <div id="loading" style="grid-column: 1 / -1; text-align: center; color: white; font-size: 1.2rem; padding: 2rem;">
+            Loading team members...
         </div>
-    </div>
-
-    <!-- Team Member 2: Malte -->
-    <div class="team-member-card">
-        <img src="images/malte.jpeg" alt="Malte Hitpaß" class="profile-pic">
-        <h2>Malte Hitpaß</h2>
-        <p class="role">Medicine Student</p>
-        <p class="bio">
-
-            Hey! I am Malte Hitpaß, a 5th-semester medical student from NRW, Germany. I am deeply interested in how technology can shape a more sustainable future. I am keen to explore and contribute to innovative solutions that address pressing environmental challenges, bringing a fresh perspective to the team. 
-
-            
-        </p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/malte-h-478b54249/" target="_blank" aria-label="Malte's LinkedIn Profile">
-                <i class="fab fa-linkedin"></i> </a>
-        </div>
-    </div>
-
-    <!-- Team Member 3: Rifaath -->
-    <div class="team-member-card">
-        <img src="images/rifaath.jpg" alt="Rifaath Ameen" class="profile-pic">
-        <h2>Rifaath Ameen</h2>
-        <p class="role">Master's Student - Artificial Intelligence</p>
-        <p class="bio">
-
-            
-            Hi! I'm Rifaath Ameen, an AI enthusiast currently pursuing my Master's in Artificial Intelligence at FAU Erlangen-Nürnberg, building on my Bachelor's in AI & Machine Learning. My practical experience includes developing Generative AI solutions and spearheading a patented research project (ACCENDIA) using RAG and multi-LLM systems for advanced document querying. I'm driven by applying cutting-edge AI to solve real-world problems.
-
-            
-        </p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/rifaathameen/" target="_blank" aria-label="Rifaaths's LinkedIn Profile">
-                <i class="fab fa-linkedin"></i>
-            <a href="https://rifaaath.github.io/" target="_blank" aria-label="Rifaath's GitHub Profile">
-                <i class="fab fa-github"></i> </a> 
-        </div>
-    </div>
-
-    <!-- Team Member 4: Karla -->
-    <div class="team-member-card">
-        <img src="images/Hausel, Karla.jpg" alt="Karla Hausel" class="profile-pic">
-        <h2>Karla Hausel</h2>
-        <p class="role">Master's Student - International Information Systems</p>
-        <p class="bio">
-
-            Hey there! My name is Karla Hausel and I’m passionate about leveraging technology to drive sustainability and market growth. My main interests are digital transformation, innovation and aligning IT strategies with business goals. I have a Double Bachelor's Degree in International Management and have gained work experience during 2 years in the SaaS - Sales environment in Paris.
-
-            
-        </p>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/karla-hausel/" target="_blank" aria-label="Karla's LinkedIn Profile">
-                <i class="fab fa-linkedin"></i> </a>
-        </div>
-    </div>
-
-        <!-- Add more team members as needed -->
-
     </main>
 
     <footer>
@@ -102,7 +33,169 @@
     </footer>
 
     <script>
-        document.getElementById("currentYear").textContent = new Date().getFullYear();
+        let currentLanguage = 'en';
+        let teamData = [];
+
+        // Load team data from JSON file
+        async function loadTeamData() {
+            try {
+                const response = await fetch('team.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                teamData = await response.json();
+                renderTeamMembers();
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('Error loading team data:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div style="color: #ff6b6b;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Error loading team data.</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">Make sure team.json exists in the same directory.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Render team members from JSON data
+        function renderTeamMembers() {
+            const teamGrid = document.getElementById('team-grid');
+            const loadingElement = document.getElementById('loading');
+            
+            // Clear existing content except loading message
+            const teamCards = teamGrid.querySelectorAll('.team-member-card');
+            teamCards.forEach(card => card.remove());
+
+            teamData.forEach((member, index) => {
+                const card = createTeamMemberCard(member, index);
+                teamGrid.appendChild(card);
+            });
+
+            // Update language display after rendering
+            updateLanguageDisplay();
+        }
+
+        // Create a team member card element
+        function createTeamMemberCard(member, index) {
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe'];
+            const cardColor = colors[index % colors.length];
+            
+            const card = document.createElement('div');
+            card.className = 'team-member-card';
+            
+            // Handle social links
+            let socialLinksHtml = '';
+            if (member.social_links) {
+                socialLinksHtml = '<div class="social-links">';
+                
+                if (member.social_links.linkedin) {
+                    socialLinksHtml += `<a href="${member.social_links.linkedin}" target="_blank" aria-label="${member.name}'s LinkedIn Profile"><i class="fab fa-linkedin"></i></a>`;
+                }
+                if (member.social_links.github) {
+                    socialLinksHtml += `<a href="${member.social_links.github}" target="_blank" aria-label="${member.name}'s GitHub Profile"><i class="fab fa-github"></i></a>`;
+                }
+                if (member.social_links.website) {
+                    socialLinksHtml += `<a href="${member.social_links.website}" target="_blank" aria-label="${member.name}'s Website"><i class="fas fa-globe"></i></a>`;
+                }
+                if (member.social_links.email) {
+                    socialLinksHtml += `<a href="mailto:${member.social_links.email}" aria-label="Email ${member.name}"><i class="fas fa-envelope"></i></a>`;
+                }
+                
+                socialLinksHtml += '</div>';
+            }
+
+            // Create placeholder image if no image file specified
+            const imageUrl = member.image_file 
+                ? `images/${member.image_file}` 
+                : `https://via.placeholder.com/120x120/${cardColor.substring(1)}/ffffff?text=${member.name.split(' ').map(n => n[0]).join('')}`;
+
+            card.innerHTML = `
+                <img src="${imageUrl}" alt="${member.name}" class="profile-pic" onerror="this.src='https://via.placeholder.com/120x120/${cardColor.substring(1)}/ffffff?text=${member.name.split(' ').map(n => n[0]).join('')}'">
+                <h2>${member.name}</h2>
+                <p class="role" data-en="${member.role.en}" data-de="${member.role.de}">${member.role.en}</p>
+                <p class="bio" data-en="${member.bio.en}" data-de="${member.bio.de}">${member.bio.en}</p>
+                ${socialLinksHtml}
+            `;
+
+            return card;
+        }
+
+        // Switch language function
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update button states
+            document.querySelectorAll('.language-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`lang-${lang}`).classList.add('active');
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            smoothLanguageTransition();
+            
+            // Update page title
+            if (lang === 'de') {
+                document.title = 'Unser Team';
+            } else {
+                document.title = 'Our Team';
+            }
+        }
+
+        function smoothLanguageTransition() {
+            const elementsToAnimate = document.querySelectorAll('[data-en]');
+            
+            // First, fade out all elements
+            elementsToAnimate.forEach(element => {
+                element.classList.add('fade-out');
+            });
+            
+            // After fade out completes, update text and fade back in
+            setTimeout(() => {
+                updateLanguageDisplay();
+                
+                elementsToAnimate.forEach(element => {
+                    element.classList.remove('fade-out');
+                    element.classList.add('fade-in');
+                });
+                
+                // Clean up fade-in class after animation
+                setTimeout(() => {
+                    elementsToAnimate.forEach(element => {
+                        element.classList.remove('fade-in');
+                    });
+                }, 300);
+            }, 300);
+        }
+
+
+        // Update all text elements based on current language
+        function updateLanguageDisplay() {
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (element.hasAttribute(`data-${currentLanguage}`)) {
+                    element.textContent = element.getAttribute(`data-${currentLanguage}`);
+                }
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year
+            document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+            // Initialize language based on browser preference
+            const browserLanguage = navigator.language.toLowerCase();
+            if (browserLanguage.startsWith('de')) {
+                currentLanguage = 'de';
+                document.getElementById('lang-de').classList.add('active');
+                document.getElementById('lang-en').classList.remove('active');
+            }
+
+            // Load team data
+            loadTeamData();
+        });
     </script>
 </body>
 </html>
